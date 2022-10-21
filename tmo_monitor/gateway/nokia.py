@@ -1,13 +1,11 @@
-from .base import ControllerBase
 from base64 import b64encode
 import hashlib
-import logging
 import requests
 import secrets
 import sys
 from ..status import ExitStatus
 
-class TrashCanController(ControllerBase):
+class TrashCanController:
   def __init__(self, username, password):
     self.username = username
     self.password = password
@@ -21,7 +19,7 @@ class TrashCanController(ControllerBase):
     try:
       login_request = requests.post('http://192.168.12.1/login_app.cgi', data={'name': self.username, 'pswd': self.password})
     except:
-      logging.critical("Could not post login request, exiting.")
+      print("Could not post login request, exiting.")
       sys.exit(ExitStatus.API_ERROR.value)
     login_request.raise_for_status()
 
@@ -35,7 +33,7 @@ class TrashCanController(ControllerBase):
         self.login_app()
       stat_request = requests.get('http://192.168.12.1/cell_status_app.cgi', cookies=self.app_jar)
     except:
-      logging.critical("Could not query site info, exiting.")
+      print("Could not query site info, exiting.")
       sys.exit(ExitStatus.API_ERROR.value)
 
     stat_request.raise_for_status()
@@ -51,7 +49,7 @@ class TrashCanController(ControllerBase):
     try:
       nonce_request = requests.get('http://192.168.12.1/login_web_app.cgi?nonce')
     except:
-      logging.critical("Could not query nonce, exiting.")
+      print("Could not query nonce, exiting.")
       sys.exit(ExitStatus.API_ERROR.value)
 
     nonce_request.raise_for_status()
@@ -72,12 +70,10 @@ class TrashCanController(ControllerBase):
     try:
       login_request = requests.post('http://192.168.12.1/login_web_app.cgi', data=login_request_body)
     except:
-      logging.critical("Could not post login request, exiting.")
+      print("Could not post login request, exiting.")
       sys.exit(ExitStatus.API_ERROR.value)
     login_request.raise_for_status()
-    self.web_jar = requests.cookies.RequestsCookieJar()
-    self.web_jar.set('sid', login_request.cookies['sid'], domain='192.168.12.1', path='/')
-    self.web_jar.set('lsid', login_request.cookies['lsid'], domain='192.168.12.1', path='/')
+    self.web_jar = login_request.cookies
     login_response = login_request.json()
     self.csrf_token = login_response['token']
 
@@ -87,7 +83,7 @@ class TrashCanController(ControllerBase):
         self.login_web()
       reboot_request = requests.post('http://192.168.12.1/reboot_web_app.cgi', data={'csrf_token': self.csrf_token}, cookies=self.web_jar)
     except:
-      logging.critical("Could not post reboot request, exiting.")
+      print("Could not post reboot request, exiting.")
       sys.exit(ExitStatus.API_ERROR.value)
     reboot_request.raise_for_status()
 
@@ -96,7 +92,7 @@ class TrashCanController(ControllerBase):
     try:
       uptime_req = requests.get('http://192.168.12.1/dashboard_device_info_status_web_app.cgi')
     except:
-      logging.critical("Could not query modem uptime, exiting.")
+      print("Could not query modem uptime, exiting.")
       sys.exit(ExitStatus.API_ERROR.value)
     uptime_req.raise_for_status()
     return uptime_req.json()['device_app_status'][0]['UpTime']
@@ -105,7 +101,7 @@ class TrashCanController(ControllerBase):
     try:
       signal_request = requests.get('http://192.168.12.1/fastmile_radio_status_web_app.cgi')
     except:
-      logging.critical("Could not query signal status, exiting.")
+      print("Could not query signal status, exiting.")
       sys.exit(ExitStatus.API_ERROR.value)
     signal_request.raise_for_status()
     info = signal_request.json()

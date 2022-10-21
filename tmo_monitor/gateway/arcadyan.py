@@ -32,7 +32,7 @@ class CubeController:
     meta = stat_request.json()['cell']['4g']
 
     return {
-      'eNBID': math.floor(int(meta['ecgi'][6:], 16)/256),
+      'eNBID': math.floor(int(meta['ecgi'][6:])/256),
       'PLMN': meta['mcc'] + '-' + meta['mnc']
     }
   def reboot(self):
@@ -64,7 +64,10 @@ class CubeController:
   def get_signal_info(self):
     info = self.get_all_info_web()
     lte_info = info['signal']['4g']['bands']
-    nr_info = info['signal']['5g']['bands']
+    if '5g' in info['signal']:
+      nr_info = info['signal']['5g']['bands']
+    else:
+      nr_info = []
 
     return {
       '4G': None if len(lte_info) == 0 else lte_info[0].upper(),

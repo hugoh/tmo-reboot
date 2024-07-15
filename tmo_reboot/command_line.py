@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
+
+"""Module providing a function printing python version."""
+
 import os
-import sys
-from tmo_monitor.gateway.model import GatewayModel
+
 from tmo_monitor.gateway.arcadyan import CubeController
+from tmo_monitor.gateway.model import GatewayModel
 from tmo_monitor.gateway.nokia import TrashCanController
 from tmo_monitor.status import ExitStatus
 
-if __name__ == "__main__":
 
+def main():
+    """Command line main function"""
     user = os.getenv("TMHI_USER")
     if user is None or user == "":
         user = "admin"
     password = os.environ.get("TMHI_PASSWORD")
-    
+
     model = os.getenv("TMHI_MODEL")
 
     if model == GatewayModel.NOKIA.value:
@@ -20,8 +24,8 @@ if __name__ == "__main__":
     elif model == GatewayModel.ARCADYAN.value:
         gw_control = CubeController(user, password)
     else:
-        raise Exception("Unsupported Gateway Model: %s" % model)
+        raise ValueError(f"Unsupported Gateway Model: {model}")
 
     gw_control.reboot()
 
-    sys.exit(ExitStatus.REBOOT_PERFORMED.value)
+    return ExitStatus.REBOOT_PERFORMED.value

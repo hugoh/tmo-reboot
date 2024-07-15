@@ -1,0 +1,60 @@
+---
+name: Build & Release
+
+permissions: {}
+
+on: # yamllint disable-line rule:truthy
+  push:
+    paths-ignore:
+      - "*.md"
+  pull_request:
+    paths-ignore:
+      - "*.md"
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+    concurrency: release
+
+    permissions:
+      contents: read
+      packages: write
+      statuses: write
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install dependencies
+        shell: bash
+        run: poetry install --with=dev
+
+      - name: Install dependencies
+        shell: bash
+        run: poetry build
+
+      - name: Release
+        uses: python-semantic-release/python-semantic-release@v9.8.5
+        id: release
+        if: github.ref_name == 'main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ env.PYPI_TOKEN }}
+        if: steps.release.outputs.released == 'true'
+
+      - name: Publish package distributions to GitHub Releases
+        uses: python-semantic-release/upload-to-gh-release@v8.7.0
+        if: steps.release.outputs.released == 'true'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -3,6 +3,8 @@ name: Semantic Release Test
 
 on: # yamllint disable-line rule:truthy
   pull_request:
+    paths-ignore:
+      - "*.md"
 
 jobs:
   release:
@@ -12,9 +14,8 @@ jobs:
     #   id-token: write
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+      - name: Build
+        uses: ./.github/actions/build.yaml
 
       - name: Python Semantic Release
         id: release

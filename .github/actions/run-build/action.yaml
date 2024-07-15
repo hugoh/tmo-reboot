@@ -9,7 +9,9 @@ runs:
       uses: snok/install-poetry@v1
 
     - name: Install dependencies
+      shell: bash
       run: poetry install --with=dev
 
     - name: Install dependencies
+      shell: bash
       run: poetry build

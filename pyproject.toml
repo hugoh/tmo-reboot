@@ -12,7 +12,7 @@ packages = [{ include = "tmo_monitor" }]
 tmo-reboot = "tmo_reboot.command_line:main"
 
 [tool.poetry.dependencies]
-python = "^3.5"
+python = "^3.8"
 requests = "^2.32.3"
 
 

@@ -9,6 +9,7 @@ from tmo_monitor.status import ExitStatus
 
 
 def main():
+    """Command line main function"""
     user = os.getenv("TMHI_USER")
     if user is None or user == "":
         user = "admin"
@@ -21,7 +22,7 @@ def main():
     elif model == GatewayModel.ARCADYAN.value:
         gw_control = CubeController(user, password)
     else:
-        raise Exception("Unsupported Gateway Model: %s" % model)
+        raise ValueError(f"Unsupported Gateway Model: {model}")
 
     gw_control.reboot()
 

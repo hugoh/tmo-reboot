@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+
+"""Module providing a function printing python version."""
+
 import os
 import sys
 

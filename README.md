@@ -1,6 +1,6 @@
-# tmo-monitor - reboot-only version
+# tmo-reboot
 
-A lightweight, cross-platform Python 3 script that can reboot the T-Mobile Home Internet Nokia and Arcadyan 5G Gateways for 4G/5G bands, cellular site (tower), and internet connectivity and reboots as needed or on-demand.
+A lightweight, cross-platform Python 3 script that can reboot the T-Mobile Home Internet Arcadyan and Nokia 5G Gateways.
 
 It's based on [highvolt-dev/tmo-monitor](https://github.com/highvolt-dev/tmo-monitor): it's a stripped-down version of the code, with minimal dependencies.
 

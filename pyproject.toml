@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tmo-reboot"
-version = "0.2.0"
+version = "0.0.0"
 description = "A script to reboot the T-Mobile Home Internet 5G Gateways"
 authors = ["Hugo Haas <hugoh@hugoh.net>"]
 license = "MIT"

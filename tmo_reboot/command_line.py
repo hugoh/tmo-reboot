@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 import os
 import sys
-from tmo_monitor.gateway.model import GatewayModel
+
 from tmo_monitor.gateway.arcadyan import CubeController
+from tmo_monitor.gateway.model import GatewayModel
 from tmo_monitor.gateway.nokia import TrashCanController
 from tmo_monitor.status import ExitStatus
+
 
 def main():
     user = os.getenv("TMHI_USER")
     if user is None or user == "":
         user = "admin"
     password = os.environ.get("TMHI_PASSWORD")
-    
+
     model = os.getenv("TMHI_MODEL")
 
     if model == GatewayModel.NOKIA.value:

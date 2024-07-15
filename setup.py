@@ -13,7 +13,7 @@ setup(
     url="https://github.com/hugoh/tmo-reboot",
     author="hugoh",
     license="MIT",
-    packages=["tmo_monitor", "tmo_monitor.gateway"],
+    packages=["tmo_reboot", "tmo_monitor", "tmo_monitor.gateway"],
     entry_points={
         "console_scripts": ["tmo-reboot=tmo_reboot.command_line:main"],
     },

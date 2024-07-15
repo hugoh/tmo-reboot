@@ -7,7 +7,7 @@ on: # yamllint disable-line rule:truthy
       - "*.md"
 
 jobs:
-  release:
+  test_release:
     runs-on: ubuntu-latest
     concurrency: release
     # permissions:

@@ -1,5 +1,5 @@
 ---
-name: Semantic Release
+name: Build & Release
 
 on: # yamllint disable-line rule:truthy
   push:
@@ -9,7 +9,7 @@ on: # yamllint disable-line rule:truthy
       - "*.md"
 
 jobs:
-  release:
+  build_and_release:
     runs-on: ubuntu-latest
     concurrency: release
     permissions:

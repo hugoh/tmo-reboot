@@ -3,7 +3,6 @@
 """Module providing a function printing python version."""
 
 import os
-import sys
 
 from tmo_monitor.gateway.arcadyan import CubeController
 from tmo_monitor.gateway.model import GatewayModel
@@ -29,4 +28,4 @@ def main():
 
     gw_control.reboot()
 
-    sys.exit(ExitStatus.REBOOT_PERFORMED.value)
+    return ExitStatus.REBOOT_PERFORMED.value

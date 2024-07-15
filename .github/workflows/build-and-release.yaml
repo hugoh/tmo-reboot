@@ -35,7 +35,7 @@ jobs:
         shell: bash
         run: poetry install --with=dev
 
-      - name: Install dependencies
+      - name: Build
         shell: bash
         run: poetry build
 

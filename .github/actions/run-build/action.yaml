@@ -1,5 +1,6 @@
 ---
 name: Build
+description: "Builds the package for release"
 
 runs:
   using: composite

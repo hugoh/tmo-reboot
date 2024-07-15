@@ -1,6 +1,8 @@
 ---
 name: Build & Release
 
+permissions: {}
+
 on: # yamllint disable-line rule:truthy
   push:
     branches:
@@ -12,7 +14,11 @@ jobs:
   build_and_release:
     runs-on: ubuntu-latest
     concurrency: release
+
     permissions:
+      contents: read
+      packages: write
+      statuses: write
       id-token: write
 
     steps:

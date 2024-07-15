@@ -1,6 +1,8 @@
 ---
 name: Semantic Release Test
 
+permissions: {}
+
 on: # yamllint disable-line rule:truthy
   pull_request:
     paths-ignore:
@@ -10,8 +12,12 @@ jobs:
   test_release:
     runs-on: ubuntu-latest
     concurrency: release
-    # permissions:
-    #   id-token: write
+
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
 
     steps:
       - name: Checkout code

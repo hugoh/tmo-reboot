@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 0
 
       - name: Super-linter
-        uses: super-linter/super-linter@v6.7.0
+        uses: super-linter/super-linter@v7.2.1
         env:
           FILTER_REGEX_EXCLUDE: .*/tmo_monitor/.*
           VALIDATE_NATURAL_LANGUAGE: false
